@@ -15,7 +15,6 @@ public class MainActivity extends AppCompatActivity {
 
     private ImageView imageViewDicy1;
     private ImageView imageViewDicy2;
-    private Button rollingBtn;
 
     public static final  Random myRandomNumber = new Random();
 
@@ -26,7 +25,7 @@ public class MainActivity extends AppCompatActivity {
 
         imageViewDicy1 = findViewById(R.id.imgv_dice_l);
         imageViewDicy2 = findViewById(R.id.imgv_dice_r);
-        rollingBtn = findViewById(R.id.rollDices);
+        Button rollingBtn = findViewById(R.id.rollDices);
         rollingBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -41,15 +40,17 @@ public class MainActivity extends AppCompatActivity {
 
                     @Override
                     public void onAnimationEnd(Animation animation) {
+                        rollOurDice1();
+                        rollOurDice2();
 
-                        int value = randomDiceValue();
+                       /* int value = randomDiceValue();
                         int res = getResources().getIdentifier("dice_" + value,"drawable","com.soren.sagen.diceroller");
 
                         if (animation == anim1){
                             imageViewDicy1.setImageResource(res);
                         }else if (animation == anim2){
                             imageViewDicy2.setImageResource(res);
-                        }
+                        }*/
                     }
 
                     @Override
@@ -67,11 +68,13 @@ public class MainActivity extends AppCompatActivity {
 
 
     }
+/*
 
     public static int randomDiceValue(){
         return myRandomNumber.nextInt(6)+1;
     }
 
+*/
 
 
 
@@ -79,12 +82,12 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-
-    /*public void RollingFunction(View view)
+/*
+    public void RollingFunction(View view)
     {
         rollOurDice1();
         rollOurDice2();
-    }
+    }*/
 
 
 
@@ -143,5 +146,5 @@ public class MainActivity extends AppCompatActivity {
                 break;
 
         }
-    }*/
+    }
 }
