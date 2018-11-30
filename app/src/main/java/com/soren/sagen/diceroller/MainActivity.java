@@ -4,6 +4,8 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.ImageView;
 
@@ -15,7 +17,7 @@ public class MainActivity extends AppCompatActivity {
     private ImageView imageViewDicy2;
     private Button rollingBtn;
 
-    private Random myRandomNumber = new Random();
+    public static final  Random myRandomNumber = new Random();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,10 +26,61 @@ public class MainActivity extends AppCompatActivity {
 
         imageViewDicy1 = findViewById(R.id.imgv_dice_l);
         imageViewDicy2 = findViewById(R.id.imgv_dice_r);
+        rollingBtn = findViewById(R.id.rollDices);
+        rollingBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                final Animation anim1 = AnimationUtils.loadAnimation(MainActivity.this,R.anim.shake);
+                final Animation anim2 = AnimationUtils.loadAnimation(MainActivity.this,R.anim.shake);
+                final Animation.AnimationListener animationListener = new Animation.AnimationListener() {
+                    @Override
+                    public void onAnimationStart(Animation animation) {
+
+                    }
+
+                    @Override
+                    public void onAnimationEnd(Animation animation) {
+
+                        int value = randomDiceValue();
+                        int res = getResources().getIdentifier("dice_" + value,"drawable","com.soren.sagen.diceroller");
+
+                        if (animation == anim1){
+                            imageViewDicy1.setImageResource(res);
+                        }else if (animation == anim2){
+                            imageViewDicy2.setImageResource(res);
+                        }
+                    }
+
+                    @Override
+                    public void onAnimationRepeat(Animation animation) {
+
+                    }
+                };
+                anim1.setAnimationListener(animationListener);
+                anim2.setAnimationListener(animationListener);
+
+                imageViewDicy1.startAnimation(anim1);
+                imageViewDicy2.startAnimation(anim2);
+            }
+        });
 
 
     }
-    public void RollingFunction(View view)
+
+    public static int randomDiceValue(){
+        return myRandomNumber.nextInt(6)+1;
+    }
+
+
+
+
+
+
+
+
+
+    /*public void RollingFunction(View view)
     {
         rollOurDice1();
         rollOurDice2();
@@ -90,5 +143,5 @@ public class MainActivity extends AppCompatActivity {
                 break;
 
         }
-    }
+    }*/
 }
